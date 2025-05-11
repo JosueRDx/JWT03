@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+
+# Entorno de desarrollo
+.env
+
+# Logs
+logs
+*.log
+
+# Datos de la base temporal
+*.sqlite
+*.sqlite-journal
+
+.DS_Store
