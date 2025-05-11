@@ -49,8 +49,21 @@ app.use("/api/test", userRoutes);
 const PORT = process.env.PORT || 3000;
 
 // Sincroniza los modelos con la base de datos (sin borrar datos si force está en false)
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: false }).then(async () => {
   console.log("Database synchronized");
+
+  // Verifica si los roles ya existen
+  const Role = db.role;
+  const count = await Role.count();
+
+  if (count === 0) {
+    await Role.bulkCreate([
+      { name: "user" },
+      { name: "moderator" },
+      { name: "admin" }
+    ]);
+    console.log("✅ Roles inicializados en la base de datos.");
+  }
 });
 
 // Luego inicia el servidor y escucha en el puerto definido
